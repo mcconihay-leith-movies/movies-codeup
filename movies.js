@@ -1,11 +1,14 @@
+// Loading page
+    $(window).on('load', function () {
+    $('#loading').hide();
+})
 
 
 
+const moviesAPI = 'https://hilarious-tame-jay.glitch.me/movies';
 
-const moviesAPI = 'https://modern-flat-grain.glitch.me/movies';
 
-
-fetch('https://modern-flat-grain.glitch.me/movies')
+fetch(moviesAPI)
     .then((response)=>response.json())
     .then((jsonData)=> console.log(jsonData))
 
@@ -20,17 +23,18 @@ function getMovies(){
 
 
 //Display data
-fetch('https://modern-flat-grain.glitch.me/movies', {headers: {'Authorization': moviesAPI}})
+fetch(moviesAPI)
     .then((callForJson)=>{
         return callForJson.json();
     }).then((movies)=>{
     console.log(movies[0])
     for(var i = 0; i <= 5; i++ ) {
-        $("#movie").append("<div class='card'><h2 class='card-title'>" + "Film" + "</h2>"
-            + "<div class='card-body'><p>" + "Title: " + movies[0][i].title + "</p>"
-            + "<p>" + "Rating: " + movies[0][i].rating + "</p>"
-            + "<p>" + "Director: " + movies[0][i].director + "</p>"
-            + "<p>" + "Plot: " + movies[0][i].plot + "</p>"
+        $("#movie").append(
+            "<div class='card col-lg-3 m-2 text-center'><h2 class='card-title'>" + movies[i].title + "</h2>"
+            + "<img class='img-fluid'  src='" + movies[i].poster + "'>"
+            + "<p>" + "Rating: " + movies[i].rating + "</p>"
+            + "<p>" + "Director: " + movies[i].director + "</p>"
+            + "<p class='card-text'>" + "Plot: " + movies[i].plot + "</p>"
             + "<button id='delete'>" + "Delete Movie" + "</button>"
             + "<button id='edit'>" + "Edit Movie" + "</button></div>")
     }
@@ -94,7 +98,8 @@ function addMovie(movie) {
         body: JSON.stringify(movie)
     }
     return fetch(`${moviesAPI}` , options)
-        .then((callJson)=>console.log(callJson.json()))
+        .then((callJson)=>callJson.json())
+        .then((parsedData)=>console.log(parsedData))
 }
 
 let sam = {
