@@ -2,10 +2,10 @@
 
 
 
-const moviesAPI = "https://reliable-accessible-net.glitch.me/movies";
+const moviesAPI = 'https://modern-flat-grain.glitch.me/movies';
 
 
-fetch('https://reliable-accessible-net.glitch.me/movies')
+fetch('https://modern-flat-grain.glitch.me/movies')
     .then((response)=>response.json())
     .then((jsonData)=> console.log(jsonData))
 
@@ -20,20 +20,25 @@ function getMovies(){
 
 
 //Display data
-fetch('https://reliable-accessible-net.glitch.me/movies', {headers: {'Authorization': moviesAPI}})
+fetch('https://modern-flat-grain.glitch.me/movies', {headers: {'Authorization': moviesAPI}})
     .then((callForJson)=>{
         return callForJson.json();
     }).then((movies)=>{
     console.log(movies[0])
     for(var i = 0; i <= 5; i++ ) {
         $("#movie").append("<div class='card'><h2 class='card-title'>" + "Film" + "</h2>"
-            + "<div class='card-body'><p>" + "Title: " + movies[i].title + "</p>"
-            + "<p>" + "Rating: " + movies[i].rating + "</p>"
-            + "<p>" + "Director: " + movies[i].director + "</p>"
-            + "<p>" + "Plot: " + movies[i].plot + "</p></div>")
+            + "<div class='card-body'><p>" + "Title: " + movies[0][i].title + "</p>"
+            + "<p>" + "Rating: " + movies[0][i].rating + "</p>"
+            + "<p>" + "Director: " + movies[0][i].director + "</p>"
+            + "<p>" + "Plot: " + movies[0][i].plot + "</p>"
+            + "<button id='delete'>" + "Delete Movie" + "</button>"
+            + "<button id='edit'>" + "Edit Movie" + "</button></div>")
     }
 });
 
+$('#delete').click(function() {
+    deleteMovie()
+});
 
 //Get a by ID
 function getMovie(id){
