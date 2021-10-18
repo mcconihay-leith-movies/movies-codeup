@@ -44,7 +44,20 @@ fetch(moviesAPI)
         var id = $(this).data('id')
         deleteMovie(id)
     });
-    // $.('.edit').click()
+    // $('.edit').click(function (){
+    //     var index = $(this).data('index')
+    //     e.preventDefault()
+    //     let editTitle = $('#newTitle').val()
+    //     let editGenre = $('#newGenre').val(movies[index].genre)
+    //     let editRating = $('#newRating').val(movies[index].rating)
+    //     editTitle.val(movies[i].title)
+    //     let editMovieObj = {
+    //         title: editTitle ,
+    //         rating: editGenre,
+    //         genre: editRating
+    //     }
+    //     return editMovie(editMovieObj)
+    // })
 });
 
 
@@ -69,21 +82,6 @@ function editMovie(movie) {
     return fetch(`${moviesAPI/movies.id}` , options)
         .then((callJson)=>callJson.json())
 }
-//
-
-
-// let editMovieobj = {
-//     title: 'Frodo',
-//     director:
-//     plot:
-//     rating:
-//     id:
-//     // age: 3
-//
-// }
-
-
-// editMovie(frodo).then((data)=>console.log(data))
 
 // Delete by
 function deleteMovie(id){
