@@ -8,12 +8,30 @@
     <title>Title</title>
 </head>
 <body>
+
+
 <div id="loading">
     <img id="loading-image" src='' alt="Loading..." />
 </div>
 <div class="container">
         <div class="row justify-content-center" id="movie"></div>
 </div>
+
+
+
+<form id="modMovies"> </form>
+
+<form id="newMovie">Add a Movie
+    <input id="newTitle" placeholder="Title" type="text">
+    <input id="newGenre" placeholder="Genre" type="text">
+    <input id="newRating" placeholder="Rating" type="text">
+    <input id="idHidden" type="hidden">
+    <button id="submitNewMovie" type="submit"> Submit</button>
+</form>
+
+
+
+
 <!--https://glitch.com/edit/#!/reliable-accessible-net?path=README.md%3A1%3A0-->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="movies.js"></script>

@@ -6,6 +6,7 @@
 
 
 const moviesAPI = 'https://hilarious-tame-jay.glitch.me/movies';
+let moviesClone = []
 
 
 fetch(moviesAPI)
@@ -23,26 +24,30 @@ function getMovies(){
 
 
 //Display data
+
 fetch(moviesAPI)
     .then((callForJson)=>{
         return callForJson.json();
-    }).then((movies)=>{
+    }).then((movies)=>{ moviesClone = movies
     console.log(movies[0])
-    for(var i = 0; i <= 5; i++ ) {
+    for(var i = 0; i <= 13; i++ ) {
         $("#movie").append(
             "<div class='card col-lg-3 m-2 text-center'><h2 class='card-title'>" + movies[i].title + "</h2>"
             + "<img class='img-fluid'  src='" + movies[i].poster + "'>"
             + "<p>" + "Rating: " + movies[i].rating + "</p>"
-            + "<p>" + "Director: " + movies[i].director + "</p>"
-            + "<p class='card-text'>" + "Plot: " + movies[i].plot + "</p>"
-            + "<button id='delete'>" + "Delete Movie" + "</button>"
-            + "<button id='edit'>" + "Edit Movie" + "</button></div>")
+            + "<p>" + "Genre: " + movies[i].genre + "</p>"
+            + "<button class='delete' data-id='" + movies[i].id + "'>" + "Delete Movie" + "</button>"
+            + "<button class='edit' data-index='" + i + "' type='button' class='btn' data-toggle='modal'>" + "Edit Movie" + "</button></div>")
+
     }
+    $('.delete').click(function() {
+        var id = $(this).data('id')
+        deleteMovie(id)
+    });
+    // $.('.edit').click()
 });
 
-$('#delete').click(function() {
-    deleteMovie()
-});
+
 
 //Get a by ID
 function getMovie(id){
@@ -64,11 +69,15 @@ function editMovie(movie) {
     return fetch(`${moviesAPI/movies.id}` , options)
         .then((callJson)=>callJson.json())
 }
-// //
-// let frodo = {
+//
+
+
+// let editMovieobj = {
 //     title: 'Frodo',
-//     // isGoodDog: true,
-//     id: 11,
+//     director:
+//     plot:
+//     rating:
+//     id:
 //     // age: 3
 //
 // }
@@ -88,6 +97,10 @@ function deleteMovie(id){
         .then((callJson)=>console.log("Delete movie" + id, callJson))
 }
 //
+
+
+
+
 // Create Movie
 function addMovie(movie) {
     let options = {
@@ -100,12 +113,21 @@ function addMovie(movie) {
     return fetch(`${moviesAPI}` , options)
         .then((callJson)=>callJson.json())
         .then((parsedData)=>console.log(parsedData))
-}
-
-let sam = {
-    title: 'Sam',
-
 
 }
+$('#submitNewMovie').click(function(e){
+    e.preventDefault()
+    let newTitle = $('#newTitle').val()
+    let newGenre = $('#newGenre').val()
+    let newRating = $('#newRating').val()
+
+    let newMovieObj = {
+        title: newTitle ,
+        rating: newRating,
+        genre: newGenre
+    }
+    return addMovie(newMovieObj)
+})
+
 
 // addMovie(sam).then((newMovie)=>console.log(newMovie))
