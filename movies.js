@@ -93,7 +93,8 @@ $('#submitNewMovie').click(function (e) {
 	let newMovieObj = {
 		title: newTitle,
 		rating: newRating,
-		genre: newGenre
+		genre: newGenre,
+		poster: "https://m.media-amazon.com/images/I/51+j8eMdK2L._AC_SL1000_.jpg"
 	}
 	return addMovie(newMovieObj)
 })
