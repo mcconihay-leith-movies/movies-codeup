@@ -182,12 +182,13 @@ fetch(moviesAPI)
 	}).then((movies) => {
 	for (let i = 0; i <= 13; i++) {
 		$("#movie").append(
-			"<div class='card shadow-box col-lg-3 m-2 text-center card-bg text-light'>" + movies[i].title
+			"<div class='card shadow-box col-lg-3 m-2 text-center card-bg text-light'>"
+			+ "<div class='card-header'>" + movies[i].title + "</div>"
 			+ "<img class='img-fluid'  src='" + movies[i].poster + "' style='height: 20em; width: 15em' alt='Movie Poster'>"
-			+ "<p>" + "Rating: " + movies[i].rating + "</p>"
-			+ "<p>" + "Genre: " + movies[i].genre + "</p>"
-			+ "<button type='button' class='delete btn btn-light btn-outline-secondary m-1 mx-auto' data-id='" + movies[i].id + "'>" + "<i class=\"bi bi-trash\"></i>" + "</button>"
-			+ "<button type='button' class='edit btn btn-light btn-outline-secondary m-1 mx-auto' data-index='" + i + "'>" + "<i class=\"bi bi-tools\"></i>" + "</button></div>")
+			+ "<div class='card-body'><p>" + "Rating: " + movies[i].rating + "</p>"
+			+ "<p>" + "Genre: " + movies[i].genre + "</p></div>"
+			+ "<div class='card-footer'><div class='delete btn btn-light btn-outline-secondary m-1' data-id='" + movies[i].id + "'>" + "<i class=\"bi bi-trash\"></i>" + "</div>"
+			+ "<div class='edit btn btn-light btn-outline-secondary m-1' data-index='" + i + "'>" + "<i class=\"bi bi-tools\"></i>" + "</div></div></div>")
 
 		$('.edit').click(function (e) {
 			const index = $(this).data('index');
@@ -259,7 +260,8 @@ $('#submitNewMovie').click(function (e) {
 	let newMovieObj = {
 		title: newTitle,
 		rating: newRating,
-		genre: newGenre
+		genre: newGenre,
+		poster: "https://m.media-amazon.com/images/I/51+j8eMdK2L._AC_SL1000_.jpg"
 	}
 	return addMovie(newMovieObj)
 })
