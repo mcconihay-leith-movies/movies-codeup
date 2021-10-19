@@ -6,30 +6,25 @@ $(window).on('load', function () {
 })
 
 fetch(moviesAPI)
-	.then((response)=>response.json())
-	.then((jsonData)=>console.log(jsonData))
-
-//Get all Movies
-function getMovies(){
-	return fetch(moviesAPI).then((callJson)=>callJson.json());
-}
+	.then((response) => response.json())
+	.then((jsonData) => console.log(jsonData))
 
 // Render Movie cards
 fetch(moviesAPI)
-	.then((callForJson)=>{
+	.then((callForJson) => {
 		return callForJson.json();
-	}).then((movies)=>{
-	for(var i = 0; i <= 13; i++ ) {
+	}).then((movies) => {
+	for (let i = 0; i <= 13; i++) {
 		$("#movie").append(
-			"<div class='card col-lg-3 m-2 text-center'><h2 class='card-title'>" + movies[i].title + "</h2>"
-			+ "<img class='img-fluid'  src='" + movies[i].poster + "'>"
+			"<div class='card shadow-box col-lg-3 m-2 text-center card-title card-bg text-light'>" + movies[i].title
+			+ "<img class='img-fluid'  src='" + movies[i].poster + "' style='height: 20em; width: 15em'>"
 			+ "<p>" + "Rating: " + movies[i].rating + "</p>"
 			+ "<p>" + "Genre: " + movies[i].genre + "</p>"
-			+ "<button class='delete' data-id='" + movies[i].id + "'>" + "Delete Movie" + "</button>"
-			+ "<button class='edit' data-index='" + i + "' type='button'>" + "Edit Movie" + "</button></div>")
+			+ "<button class='btn btn-light btn-outline-secondary m-1' class='delete' data-id='" + movies[i].id + "'>" + "Delete Movie" + "</button>"
+			+ "<button class='btn btn-light btn-outline-secondary m-1' class='edit' data-index='" + i + "' type='button'>" + "Edit Movie" + "</button></div>")
 
-		$('.edit').click(function (e){
-			var index = $(this).data('index')
+		$('.edit').click(function (e) {
+			const index = $(this).data('index');
 			e.preventDefault()
 
 			$('#editTitle').val(movies[index].title)
@@ -38,9 +33,9 @@ fetch(moviesAPI)
 			$('#idHidden').val(movies[index].id)
 		})
 
-		$('.delete').click(function() {
+		$('.delete').click(function () {
 			console.log("delete listener")
-			var id = $(this).data('id')
+			const id = $(this).data('id');
 			deleteMovie(id)
 		});
 	}
@@ -56,12 +51,12 @@ function editMovie(movie) {
 		body: JSON.stringify(movie)
 	}
 	console.log(`${moviesAPI}/${movie.id}`)
-	return fetch(`${moviesAPI}/${movie.id}` , options)
-		.then((callJson)=>callJson.json())
+	return fetch(`${moviesAPI}/${movie.id}`, options)
+		.then((callJson) => callJson.json())
 }
 
 // Delete Movie
-function deleteMovie(id){
+function deleteMovie(id) {
 	let options = {
 		method: 'DELETE',
 		headers: {
@@ -69,7 +64,7 @@ function deleteMovie(id){
 		},
 	}
 	fetch(`${moviesAPI}/${id}`, options)
-		.then((callJson)=>console.log("Delete movie" + id, callJson))
+		.then((callJson) => console.log("Delete movie" + id, callJson))
 }
 
 // Create Movie
@@ -81,21 +76,21 @@ function addMovie(movie) {
 		},
 		body: JSON.stringify(movie)
 	}
-	return fetch(`${moviesAPI}` , options)
-		.then((callJson)=>callJson.json())
-		.then((parsedData)=>console.log(parsedData))
+	return fetch(`${moviesAPI}`, options)
+		.then((callJson) => callJson.json())
+		.then((parsedData) => console.log(parsedData))
 
 }
 
 // Add Movie button event listener
-$('#submitNewMovie').click(function(e){
+$('#submitNewMovie').click(function (e) {
 	e.preventDefault()
 	let newTitle = $('#newTitle').val()
 	let newGenre = $('#newGenre').val()
 	let newRating = $('#newRating').val()
 
 	let newMovieObj = {
-		title: newTitle ,
+		title: newTitle,
 		rating: newRating,
 		genre: newGenre
 	}
@@ -103,7 +98,7 @@ $('#submitNewMovie').click(function(e){
 })
 
 // Edit Movie button event listener
-$('#modMovie').click(function (e){
+$('#modMovie').click(function (e) {
 	e.preventDefault()
 
 	let editTitle = $('#editTitle').val()
