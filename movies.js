@@ -173,40 +173,46 @@ $(window).on('load', function () {
 
 fetch(moviesAPI)
 	.then((response) => response.json())
-	.then((jsonData) => console.log(jsonData))
+	.then((jsonData) => renderMovies(jsonData))
 
 // Render Movie cards
-fetch(moviesAPI)
-	.then((callForJson) => {
-		return callForJson.json();
-	}).then((movies) => {
-	for (let i = 0; i <= 13; i++) {
-		$("#movie").append(
-			"<div class='card shadow-box col-lg-3 m-2 text-center card-bg text-light'>"
-			+ "<div class='card-header'>" + movies[i].title + "</div>"
-			+ "<img class='img-fluid'  src='" + movies[i].poster + "' style='height: 20em; width: 15em' alt='Movie Poster'>"
-			+ "<div class='card-body'><p>" + "Rating: " + movies[i].rating + "</p>"
-			+ "<p>" + "Genre: " + movies[i].genre + "</p></div>"
-			+ "<div class='card-footer'><div class='delete btn btn-light btn-outline-secondary m-1' data-id='" + movies[i].id + "'>" + "<i class=\"bi bi-trash\"></i>" + "</div>"
-			+ "<div class='edit btn btn-light btn-outline-secondary m-1' data-index='" + i + "'>" + "<i class=\"bi bi-tools\"></i>" + "</div></div></div>")
+function renderMovies(){
+	fetch(moviesAPI)
+		.then((callForJson) => {
+			return callForJson.json();
+		}).then((movies) => {
+		$("#movie").html('');
+		for (let i = 0; i <= 13; i++) {
+			$("#movie").append(
+				"<div class='card shadow-box col-lg-3 m-2 text-center card-bg text-light'>"
+				+ "<div class='card-header'>" + movies[i].title + "</div>"
+				+ "<img class='img-fluid'  src='" + movies[i].poster + "' style='height: 20em; width: 15em' alt='Movie Poster'>"
+				+ "<div class='card-body'><p>" + movies[i].rating + "/5 <i class=\"bi bi-star-fill\"></i></p>"
+				+ "<p>" + "Genre: " + movies[i].genre + "</p></div>"
+				+ "<div class='card-footer'><div class='delete btn btn-light btn-outline-secondary m-1' data-id='" + movies[i].id + "'>" + "<i class=\"bi bi-trash\"></i>" + "</div>"
+				+ "<div class='edit btn btn-light btn-outline-secondary m-1' data-index='" + i + "'>" + "<i class=\"bi bi-tools\"></i>" + "</div></div></div>")
 
-		$('.edit').click(function (e) {
-			const index = $(this).data('index');
-			e.preventDefault()
+			$('.edit').click(function (e) {
+				const index = $(this).data('index');
+				e.preventDefault()
 
-			$('#editTitle').val(movies[index].title)
-			$('#editGenre').val(movies[index].genre)
-			$('#editRating').val(movies[index].rating)
-			$('#idHidden').val(movies[index].id)
-		})
+				$('#editTitle').val(movies[index].title)
+				$('#editGenre').val(movies[index].genre)
+				$('#editRating').val(movies[index].rating)
+				$('#idHidden').val(movies[index].id)
+			})
 
-		$('.delete').click(function () {
-			console.log("delete listener")
-			const id = $(this).data('id');
-			deleteMovie(id)
-		});
-	}
-});
+			$('.delete').click(function () {
+				console.log("delete listener")
+				const id = $(this).data('id');
+				deleteMovie(id).then(function (){
+					renderMovies()
+				})
+			});
+		}
+	});
+}
+
 
 // Edit Movie
 function editMovie(movie) {
@@ -230,7 +236,7 @@ function deleteMovie(id) {
 			'Content-Type': 'application/json',
 		},
 	}
-	fetch(`${moviesAPI}/${id}`, options)
+	return fetch(`${moviesAPI}/${id}`, options)
 		.then((callJson) => console.log("Delete movie" + id, callJson))
 }
 
@@ -263,7 +269,9 @@ $('#submitNewMovie').click(function (e) {
 		genre: newGenre,
 		poster: "https://m.media-amazon.com/images/I/51+j8eMdK2L._AC_SL1000_.jpg"
 	}
-	return addMovie(newMovieObj)
+	return addMovie(newMovieObj).then(function (){
+		renderMovies()
+	})
 })
 
 // Edit Movie button event listener
@@ -284,5 +292,7 @@ $('#modMovie').click(function (e) {
 	}
 	console.log(editMovieObj);
 
-	return editMovie(editMovieObj)
+	return editMovie(editMovieObj).then(function (){
+		renderMovies()
+	})
 })
