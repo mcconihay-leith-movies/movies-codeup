@@ -16,12 +16,12 @@ fetch(moviesAPI)
 	}).then((movies) => {
 	for (let i = 0; i <= 13; i++) {
 		$("#movie").append(
-			"<div class='card shadow-box col-lg-3 m-2 text-center card-title card-bg text-light'>" + movies[i].title
-			+ "<img class='img-fluid'  src='" + movies[i].poster + "' style='height: 20em; width: 15em'>"
+			"<div class='card shadow-box col-lg-3 m-2 text-center card-bg text-light'>" + movies[i].title
+			+ "<img class='img-fluid'  src='" + movies[i].poster + "' style='height: 20em; width: 15em' alt='Movie Poster'>"
 			+ "<p>" + "Rating: " + movies[i].rating + "</p>"
 			+ "<p>" + "Genre: " + movies[i].genre + "</p>"
-			+ "<button class='btn btn-light btn-outline-secondary m-1' class='delete' data-id='" + movies[i].id + "'>" + "Delete Movie" + "</button>"
-			+ "<button class='btn btn-light btn-outline-secondary m-1' class='edit' data-index='" + i + "' type='button'>" + "Edit Movie" + "</button></div>")
+			+ "<button class='delete btn btn-light btn-outline-secondary m-1' data-id='" + movies[i].id + "'>" + "<i class=\"bi bi-trash\"></i>" + "</button>"
+			+ "<button class='edit btn btn-light btn-outline-secondary m-1' data-index='" + i + "' type='button'>" + "<i class=\"bi bi-tools\"></i>" + "</button></div>")
 
 		$('.edit').click(function (e) {
 			const index = $(this).data('index');
