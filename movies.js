@@ -186,8 +186,8 @@ fetch(moviesAPI)
 			+ "<img class='img-fluid'  src='" + movies[i].poster + "' style='height: 20em; width: 15em' alt='Movie Poster'>"
 			+ "<p>" + "Rating: " + movies[i].rating + "</p>"
 			+ "<p>" + "Genre: " + movies[i].genre + "</p>"
-			+ "<button class='delete btn btn-light btn-outline-secondary m-1' data-id='" + movies[i].id + "'>" + "<i class=\"bi bi-trash\"></i>" + "</button>"
-			+ "<button class='edit btn btn-light btn-outline-secondary m-1' data-index='" + i + "' type='button'>" + "<i class=\"bi bi-tools\"></i>" + "</button></div>")
+			+ "<button type='button' class='delete btn btn-light btn-outline-secondary m-1 mx-auto' data-id='" + movies[i].id + "'>" + "<i class=\"bi bi-trash\"></i>" + "</button>"
+			+ "<button type='button' class='edit btn btn-light btn-outline-secondary m-1 mx-auto' data-index='" + i + "'>" + "<i class=\"bi bi-tools\"></i>" + "</button></div>")
 
 		$('.edit').click(function (e) {
 			const index = $(this).data('index');
